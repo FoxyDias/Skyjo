@@ -22,6 +22,8 @@ public class PanelMenuInfo extends JPanel implements ActionListener {
 
         this.btnRetour.addActionListener(this);
 
+        this.add(this.btnRetour);
+
     }
 
     @Override
