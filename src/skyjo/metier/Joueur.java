@@ -44,6 +44,13 @@ public class Joueur {
         this.grilleCartesDecouvert[lig][col] = this.grilleCartesCache[lig][col];
     }
 
+    public void remplacerCarte(int val, int lig, int col)
+    {
+        this.grilleCartesCache[lig][col] = val;
+        if(!(this.grilleCartesDecouvert[lig][col] < -2 || this.grilleCartesDecouvert[lig][col] > 12))
+            this.grilleCartesDecouvert[lig][col] = val;
+    }
+
     public boolean isFini()
     {
         boolean fini = true;
@@ -51,7 +58,7 @@ public class Joueur {
         {
             for(int j=0; j<this.grilleCartesDecouvert[i].length; j++)
             {
-                if(!(this.grilleCartesCache[i][j] < -2 || this.grilleCartesCache[i][j] > 12))
+                if(!(this.grilleCartesDecouvert[i][j] < -2 || this.grilleCartesDecouvert[i][j] > 12))
                 {
                     fini = false;
                 }
@@ -68,7 +75,7 @@ public class Joueur {
         {
             for(int j=0; j<this.grilleCartesDecouvert[i].length; j++)
             {
-                if(!(this.grilleCartesCache[i][j] < -2 || this.grilleCartesCache[i][j] > 12))
+                if(!(this.grilleCartesDecouvert[i][j] < -2 || this.grilleCartesDecouvert[i][j] > 12))
                 {
                     score += this.grilleCartesDecouvert[i][j];
                 }

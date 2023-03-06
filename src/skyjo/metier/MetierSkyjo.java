@@ -12,6 +12,7 @@ public class MetierSkyjo {
     int[] tabPioche;
     int[] tabDefausse;
     int indexJoueurActuel;
+    int cartePiocher;
     ArrayList<Joueur> lstJoueur;
 
     public MetierSkyjo(Controleur ctrl) {
@@ -19,6 +20,7 @@ public class MetierSkyjo {
         this.ctrl = ctrl;
         this.lstJoueur = new ArrayList<Joueur>();
         this.indexJoueurActuel = 0;
+        this.cartePiocher = 0;
 
         initPartie();
 
@@ -34,6 +36,7 @@ public class MetierSkyjo {
         {
             j.ajouterCarte(piocherCarteRandom());
         }
+        changerCartePiocher();
 
     }
 
@@ -49,6 +52,11 @@ public class MetierSkyjo {
         return this.tabPioche[rand];
     }
 
+    public void changerCartePiocher()
+    {
+        this.cartePiocher = piocherCarteRandom();
+    }
+
     public void determinePremierJoueur()
     {
         this.indexJoueurActuel = 0;
@@ -61,6 +69,20 @@ public class MetierSkyjo {
             {
                 this.indexJoueurActuel = i;
             }
+        }
+    }
+
+    public void jouerTour(String action, int col, int lig)
+    {
+        if(action.equals("retouner"))
+        {
+            this.lstJoueur.get(this.indexJoueurActuel).decouvrirCarte(lig,col);
+        }
+        else if(action.equals("remplacer"))
+        {
+            int temp = this.lstJoueur.get(this.indexJoueurActuel).getGrilleCartesDecouvert()[lig][col];
+            this.lstJoueur.get(this.indexJoueurActuel).remplacerCarte(this.cartePiocher, lig, col);
+            this.cartePiocher = temp;
         }
     }
 
