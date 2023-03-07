@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class PanelMenuInfo extends JPanel implements ActionListener {
@@ -63,10 +65,14 @@ public class PanelMenuInfo extends JPanel implements ActionListener {
 
         panelNord.add(lblTitre);
 
+        panelCentre.setLayout(new GridLayout(1,2));
+
+        panelChoixNbJoueur.add(new JLabel("Nombre de joueurs : "));
         panelChoixNbJoueur.add(this.combNbJoueur);
         afficheTextFieldPseudo();
 
         panelCentre.add(panelChoixNbJoueur);
+        panelCentre.add(panelChoixPseudo);
 
         for(int i=0; i<5; i++) {
             panelSud.add(new JLabel());
@@ -92,6 +98,8 @@ public class PanelMenuInfo extends JPanel implements ActionListener {
             panelSud.add(new JLabel());
         }
 
+        this.add(new JLabel(), BorderLayout.WEST);
+        this.add(new JLabel(), BorderLayout.EAST);
         this.add(panelNord, BorderLayout.NORTH);
         this.add(panelCentre, BorderLayout.CENTER);
         this.add(panelSud, BorderLayout.SOUTH);
@@ -100,13 +108,26 @@ public class PanelMenuInfo extends JPanel implements ActionListener {
 
     private void afficheTextFieldPseudo() {
         this.panelChoixPseudo.removeAll();
-        this.panelChoixPseudo.setLayout(new GridLayout((this.combNbJoueur.getSelectedIndex()+2)*2, 3));
+        this.panelChoixPseudo.setLayout(new GridLayout(this.combNbJoueur.getItemCount()+1, 2));
 
-        for(int i=0; i<this.combNbJoueur.getSelectedIndex()+2; i++)
+        for(int i=0; i<this.combNbJoueur.getItemCount()+1; i++)
         {
-            this.panelChoixPseudo.add(this.lstTxtPseudoJoueurs.get(i));
-            this.panelChoixPseudo.add(new JLabel());
+            if(i<this.combNbJoueur.getSelectedIndex()+2)
+            {
+                this.panelChoixPseudo.add(new JLabel("Joueur" + (i+1)));
+                this.panelChoixPseudo.add(this.lstTxtPseudoJoueurs.get(i));
+                this.lstTxtPseudoJoueurs.get(i).setVisible(true);
+
+            }
+            else
+            {
+                this.panelChoixPseudo.add(new JLabel());
+                this.panelChoixPseudo.add(this.lstTxtPseudoJoueurs.get(i));
+                this.lstTxtPseudoJoueurs.get(i).setVisible(false);
+            }
         }
+        this.panelChoixPseudo.revalidate();
+
     }
 
     @Override
@@ -125,8 +146,9 @@ public class PanelMenuInfo extends JPanel implements ActionListener {
                 this.papa.changePanel("plateau");
             }
             else {
-                this.lblErreurPseudo.setBackground(Color.RED);
-                this.panelChoixPseudo.add(lblErreurPseudo);
+                this.lblErreurPseudo.setForeground(Color.RED);
+                this.panelChoixNbJoueur.add(lblErreurPseudo);
+                this.panelChoixNbJoueur.revalidate();
             }
 
 
@@ -142,10 +164,12 @@ public class PanelMenuInfo extends JPanel implements ActionListener {
         }
     }
 
+
     private boolean verifierNom() {
 
-        for(JTextField p : this.lstTxtPseudoJoueurs)
+        for(int i=0; i<this.combNbJoueur.getSelectedIndex()+2;i++)
         {
+            JTextField p = this.lstTxtPseudoJoueurs.get(i);
             if(p.getText().contains(" "))
             {
                 this.lblErreurPseudo.setText("Interdiction de mettre des espaces dans votre pseudo");
