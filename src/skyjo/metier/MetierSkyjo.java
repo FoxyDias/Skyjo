@@ -86,5 +86,10 @@ public class MetierSkyjo {
         }
     }
 
-
+    public void creerJoueur(String[] tabPseudo) {
+        for(int i=0; i<tabPseudo.length; i++)
+        {
+            this.lstJoueur.add(new Joueur(tabPseudo[i]));
+        }
+    }
 }

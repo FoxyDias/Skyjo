@@ -3,6 +3,7 @@ package skyjo.ihm;
 import skyjo.Controleur;
 import skyjo.ihm.menu.PanelMenu;
 import skyjo.ihm.menu.PanelMenuInfo;
+import skyjo.ihm.plateau.PanelPlateau;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class FrameSkyjo extends JFrame {
 
     PanelMenu panelMenu;
     PanelMenuInfo panelMenuInfo;
+    PanelPlateau  panelPlateau;
 
     int longueurEcran;
     int largeurEcran;
@@ -38,9 +40,11 @@ public class FrameSkyjo extends JFrame {
 
         this.panelMenu     = new PanelMenu    (this.ctrl, this);
         this.panelMenuInfo = new PanelMenuInfo(this.ctrl, this);
+        this.panelPlateau  = new PanelPlateau (this.ctrl, this);
 
         this.panelFrame.add(panelMenu, "menu");
         this.panelFrame.add(panelMenuInfo, "menuInfo");
+        this.panelFrame.add(panelPlateau, "plateau");
 
         this.add(panelFrame);
 

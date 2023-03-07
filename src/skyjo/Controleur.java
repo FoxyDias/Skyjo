@@ -21,4 +21,8 @@ public class Controleur {
     public static void main(String[] args) {
         Controleur ctrl = new Controleur();
     }
+
+    public void creerJoueur(String[] tabPseudo) {
+        this.metier.creerJoueur(tabPseudo);
+    }
 }
